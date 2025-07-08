@@ -1,96 +1,27 @@
-<!DOCTYPE html>
-<html lang="es">
+<?php
+require_once 'autoload.php';
+require_once 'views/layout/header.php';
+require_once 'views/layout/sidebar.php';
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda de camisetas</title>
-    <link rel="stylesheet" href="./assets/css/styles.css">
-</head>
+if(isset($_GET['controller'])){
+    $nombre_controlador=$_GET['controller'].'Controller';
+}else{
+    echo "La pagina que buscas no existe";
+    exit();
+}
 
-<body>
+if(isset($nombre_controlador) && class_exists($nombre_controlador)){
 
-    <!------------------CABECERA--------------------------->
-    <header id="header">
-        <div id="logo">
-            <img src="./assets/img/camiseta.png" alt="Camiseta Logo">
-            <a href="index.php">Tienda de camisetas</a>
-        </div>
+    $controlador= new $nombre_controlador();
 
-    </header>
+    if(isset($_GET['action']) && method_exists($controlador, $_GET['action'])){
+    $action= $_GET['action'];
+    $controlador->$action();
+    }else{
+        echo "La pagina que buscas no existe";
+    }
+}else{
+    echo "La pagina que buscas no existe";
+}
 
-    <!------------------MENU--------------------------->
-    <nav id="menu">
-
-        <ul>
-
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Categoria 1</a></li>
-            <li><a href="#">Categoria 2</a></li>
-            <li><a href="#">Categoria 3</a></li>
-            <li><a href="#">Categoria 4</a></li>
-            <li><a href="#">Categoria 5</a></li>
-
-        </ul>
-    </nav>
-
-    <div id="content">
-        <!------------------BARRA LATERAL--------------------------->
-        <aside id="lateral">
-            <div id="login" class="block_aside">
-
-                <h3>Entrar a la web</h3>
-                <form action="#" method="POST">
-                    <label for="email">Email</label>
-                    <input type="email" name="email">
-
-                    <label for="password">Password</label>
-                    <input type="password" name="password">
-
-                    <input type="submit" value="Enviar">
-                </form>
-
-                <ul>
-                    <li><a href="#">Mis pedidos</a></li>
-                    <li><a href="#">Gestionar pedidos</a></li>
-                    <li><a href="#">Gestionar categorias</a></li>
-                </ul>
-
-            </div>
-        </aside>
-
-        <!------------------CONTENIDO CENTRAL--------------------------->
-        <div id="central">
-
-            <div class="product">
-                <img src="./assets/img/camiseta.png" alt="Camiseta">
-                <h2>Camiseta Azul Ancha</h2>
-                <p>30 Euros</p>
-                <a href="#" class="button">Comprar</a>
-            </div>
-
-            <div class="product">
-                <img src="./assets/img/camiseta.png" alt="Camiseta">
-                <h2>Camiseta Azul Ancha</h2>
-                <p>30 Euros</p>
-                <a href="#"  class="button">Comprar</a>
-            </div>
-
-            <div class="product">
-                <img src="./assets/img/camiseta.png" alt="Camiseta">
-                <h2>Camiseta Azul Ancha</h2>
-                <p>30 Euros</p>
-                <a href="#"  class="button">Comprar</a>
-            </div>
-
-        </div>
-    </div>
-
-    <!------------------PIE DE PÁGINA--------------------------->
-    <footer id="footer">
-        <p>Desarrolado por Brayan Diaz &copy; <?= date('Y') ?></p>
-    </footer>
-
-</body>
-
-</html>
+require_once 'views/layout/footer.php';
