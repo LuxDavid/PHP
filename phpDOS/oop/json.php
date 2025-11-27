@@ -1,0 +1,40 @@
+<?php 
+
+class Beer{
+    public string $name;
+    public string $brand;
+    public float $alcohol;
+    public bool $isStrong;
+
+    public function __construct($name, $brand, $alcohol, $isStrong)
+    {
+        $this->name= $name;
+        $this->brand= $brand;
+        $this->alcohol= $alcohol;
+        $this->isStrong= $isStrong;
+    }
+}
+
+$beer= new Beer("Delirum Red", "Delirium", 8.5, true);
+
+//Convertir un objeto a un JSON
+$json= json_encode($beer);
+// echo $json;
+
+//Convertir un JSON a un objeto
+$jsonBeer='{"name":"Delirum Red","brand":"Delirium","alcohol":8.5,"isStrong":true}';
+$objBeer= json_decode($jsonBeer);
+print_r($objBeer);
+
+$arr=[
+    "name" => "Brayan",
+    "country" => "Gaudalajara"
+];
+
+//Transformar arrays en json
+$newJson= json_encode($arr);
+// echo $newJson;
+
+//Transformar JSON a un array asociativo
+$newArr= json_decode($newJson, true);
+echo $newArr["country"];
